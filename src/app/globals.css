@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Тема "Тёмная премиальная" — графит, бронза, слоновая кость
+   
+   Tailwind CSS v4 позволяет объявлять дизайн-токены через
+   @theme inline прямо в CSS — конфиг-файл больше не нужен.
+   ============================================================ */
+
+@theme inline {
+  /* Фоны */
+  --color-bg: #0f0f0f;
+  --color-surface: #1a1a1a;
+  --color-surface-raised: #242424;
+  --color-border: #2a2a2a;
+  --color-border-hover: #3a3a3a;
+
+  /* Текст */
+  --color-text: #f5e6c8;
+  --color-text-dim: #a89878;
+  --color-text-muted: #6b5f4a;
+
+  /* Акцент — бронза */
+  --color-accent: #c9a96e;
+  --color-accent-dim: #a88f5a;
+  --color-accent-bright: #e4c48a;
+
+  /* Шрифты — системные стеки (работают offline, совместимы везде) */
+  --font-serif: Georgia, "Times New Roman", Cambria, "Source Serif Pro", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Скорости анимаций */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   Базовые стили документа
+   ============================================================ */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(201, 169, 110, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(201, 169, 110, 0.02) 0%, transparent 50%);
+  min-height: 100vh;
+
+  /* Safe area для Android/iOS — отступ под статус-бар и под нижнюю системную панель.
+     env(safe-area-inset-*) возвращает реальные значения только когда у viewport
+     стоит viewport-fit=cover (см. layout.tsx) */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.page-container {
+  /* Высота нижней навигации + отступ под жестовую полоску снизу */
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  min-height: 100vh;
+}
+
+/* Нижняя навигация прижата к низу с учётом жестовой полоски */
+.bottom-nav-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ============================================================
+   Адаптивные размеры заголовков для узких экранов
+   На устройствах ≤414px (большинство Android) уменьшаем самые
+   крупные серифные заголовки, чтобы длинные слова вроде
+   «Достопримечательности» не обрезались
+   ============================================================ */
+
+@media (max-width: 414px) {
+  h1.font-serif {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-hover);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-dim);
+}
+
+/* Серифный шрифт с тонкой типографикой */
+.font-serif {
+  font-family: var(--font-serif);
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* ============================================================
+   View Transitions API для плавного перехода между страницами
+   (нативно поддерживается в React 19.2 + Next.js 16)
+   ============================================================ */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-timing-function: var(--ease-smooth);
+}
+
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Leaflet карта — кастомизация под тёмную тему
+   ============================================================ */
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-surface) !important;
+  font-family: var(--font-sans);
+}
+
+.leaflet-tile-pane {
+  filter: brightness(0.75) saturate(0.8) hue-rotate(-10deg);
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--color-surface-raised) !important;
+  color: var(--color-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+  border: 0.5px solid var(--color-border);
+}
+
+.leaflet-popup-tip {
+  background: var(--color-surface-raised) !important;
+}
+
+.leaflet-popup-close-button {
+  color: var(--color-text-dim) !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(26, 26, 26, 0.9) !important;
+  color: var(--color-text-dim) !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--color-accent) !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: var(--color-surface-raised) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: var(--color-accent) !important;
+  color: var(--color-bg) !important;
+}
+
+/* ============================================================
+   CSS-утилиты для анимаций
+   ============================================================ */
+
+.glow-accent {
+  box-shadow: 0 0 24px rgba(201, 169, 110, 0.15);
+  transition: box-shadow 0.3s var(--ease-smooth);
+}
+.glow-accent:hover {
+  box-shadow: 0 0 32px rgba(201, 169, 110, 0.3);
+}
+
+/* Поэтапное появление дочерних элементов */
+.stagger-children > * {
+  opacity: 0;
+  animation: stagger-fade-in 0.5s var(--ease-smooth) forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(9) { animation-delay: 0.45s; }
+.stagger-children > *:nth-child(10) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(n+11) { animation-delay: 0.55s; }
+
+@keyframes stagger-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

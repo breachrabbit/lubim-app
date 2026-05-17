@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Вопросы по проекту
+    url: https://github.com/USERNAME/lubim-guide/discussions
+    about: Используйте Discussions для общих вопросов и идей

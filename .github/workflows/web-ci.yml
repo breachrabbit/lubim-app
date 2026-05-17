@@ -1,0 +1,37 @@
+# .github/workflows/web-ci.yml
+#
+# CI веб-сборки. Запускается на каждый push в main и pull-request.
+# Проверяет, что приложение компилируется и TypeScript-проверка проходит.
+#
+# Это не деплой — деплой на Vercel настраивается в UI Vercel, подключив репозиторий.
+# Этот workflow нужен, чтобы видеть статус сборки в PR-ах.
+
+name: Web CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    name: Build & typecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Сборка Next.js (обычная, без Capacitor) — проверяет, что всё компилируется
+      - name: Build Next.js
+        run: npm run build

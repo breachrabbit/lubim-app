@@ -1,0 +1,57 @@
+{
+  "name": "Гид по Любиму",
+  "short_name": "Любим",
+  "description": "Туристический путеводитель по городу Любим Ярославской области. Достопримечательности, маршруты, интерактивная карта.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0f0f",
+  "theme_color": "#0f0f0f",
+  "lang": "ru",
+  "dir": "ltr",
+  "categories": ["travel", "education", "navigation"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Карта города",
+      "short_name": "Карта",
+      "description": "Интерактивная карта со всеми достопримечательностями",
+      "url": "/map",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Достопримечательности",
+      "short_name": "Места",
+      "description": "Список всех мест города",
+      "url": "/places",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Маршруты",
+      "short_name": "Маршруты",
+      "description": "Готовые туристические маршруты",
+      "url": "/routes",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

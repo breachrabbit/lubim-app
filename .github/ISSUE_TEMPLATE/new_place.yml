@@ -1,0 +1,54 @@
+name: 📍 Добавить достопримечательность
+description: Предложить новое место для каталога
+title: "[place]: "
+labels: ["enhancement", "place"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Название места
+      placeholder: Сурский Спасо-Преображенский монастырь
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Категория
+      options:
+        - Храм
+        - Музей
+        - Парк
+        - Памятник
+        - Природный объект
+    validations:
+      required: true
+
+  - type: input
+    id: coordinates
+    attributes:
+      label: Координаты
+      description: Широта и долгота через запятую
+      placeholder: 58.36123, 40.68234
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Краткое описание
+      description: 1–2 предложения для карточки
+    validations:
+      required: true
+
+  - type: textarea
+    id: history
+    attributes:
+      label: Подробная история
+      description: Подробный текст для страницы места (датировка, история, особенности)
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Источники
+      description: Ссылки на проверяемые источники информации

@@ -1,0 +1,50 @@
+name: 🐛 Сообщить об ошибке
+description: Что-то работает не так
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо, что нашли время сообщить об ошибке. Опишите её как можно подробнее.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Что происходит
+      description: Чёткое описание ошибки
+      placeholder: При нажатии на метку карты приложение зависает...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Шаги воспроизведения
+      description: Как повторить ошибку
+      placeholder: |
+        1. Открыть страницу карты
+        2. Нажать на метку «Казанская церковь»
+        3. Увидеть, что popup пустой
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Ожидаемое поведение
+      placeholder: В popup должно появиться название и краткое описание
+
+  - type: input
+    id: device
+    attributes:
+      label: Устройство и браузер
+      placeholder: iPhone 14, Safari 17
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Скриншоты
+      description: Если уместно, прикрепите скриншоты или видео
